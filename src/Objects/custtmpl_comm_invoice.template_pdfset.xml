@@ -1,0 +1,608 @@
+<?xml version="1.0"?><!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+<pdfset>
+    <pdf>
+        <head>
+            <link name="NotoSans" type="font" subtype="truetype" src="${nsfont.NotoSans_Regular}"
+                  src-bold="${nsfont.NotoSans_Bold}" src-italic="${nsfont.NotoSans_Italic}"
+                  src-bolditalic="${nsfont.NotoSans_BoldItalic}" bytes="2"/>
+            <link name="CenturyGothic" type="font" subtype="opentype"
+                  src="https://5370305.app.netsuite.com/core/media/media.nl?id=20761&amp;c=5370305&amp;h=91a7ec77cd920efdd442&amp;_xt=.ttf"
+                  src-bold="https://5370305.app.netsuite.com/core/media/media.nl?id=20764&amp;c=5370305&amp;h=1a9eada48125e0403414&amp;_xt=.ttf"
+                  src-italic="https://5370305.app.netsuite.com/core/media/media.nl?id=20763&amp;c=5370305&amp;h=9b99020f6f7dee4af488&amp;_xt=.ttf"
+                  src-bolditalic="https://5370305.app.netsuite.com/core/media/media.nl?id=20762&amp;c=5370305&amp;h=fbbc886dbb93d845b4e6&amp;_xt=.ttf"
+                  bytes="2"/> <!-- production file cabinet, fonts -->
+
+
+            <#if subsidiary.name=='Scope VIC' >
+            <link type="stylesheet"
+                  src="https://5370305.app.netsuite.com/core/media/media.nl?id=20756&amp;c=5370305&amp;h=3eb65032e2b20b948d7f&amp;_xt=.css"/>
+            <!-- production file cabinet, templates, scope_style.css -->
+            <#else>
+            <link type="stylesheet"
+                  src="https://5370305.app.netsuite.com/core/media/media.nl?id=20753&amp;c=5370305&amp;h=7cb61524702fa8904ccd&amp;_xt=.css"/>
+            <!-- production file cabinet, templates, global_style.css -->
+        </#if>
+
+        <#if .locale=="zh_CN">
+        <link name="NotoSansCJKsc" type="font" subtype="opentype" src="${nsfont.NotoSansCJKsc_Regular}"
+              src-bold="${nsfont.NotoSansCJKsc_Bold}" bytes="2"/>
+        <#elseif .locale=="zh_TW">
+        <link name="NotoSansCJKtc" type="font" subtype="opentype" src="${nsfont.NotoSansCJKtc_Regular}"
+              src-bold="${nsfont.NotoSansCJKtc_Bold}" bytes="2"/>
+        <#elseif .locale=="ja_JP">
+        <link name="NotoSansCJKjp" type="font" subtype="opentype" src="${nsfont.NotoSansCJKjp_Regular}"
+              src-bold="${nsfont.NotoSansCJKjp_Bold}" bytes="2"/>
+        <#elseif .locale=="ko_KR">
+        <link name="NotoSansCJKkr" type="font" subtype="opentype" src="${nsfont.NotoSansCJKkr_Regular}"
+              src-bold="${nsfont.NotoSansCJKkr_Bold}" bytes="2"/>
+        <#elseif .locale=="th_TH">
+        <link name="NotoSansThai" type="font" subtype="opentype"
+              src="${nsfont.NotoSansThai_Regular}" src-bold="${nsfont.NotoSansThai_Bold}" bytes="2"/>
+    </#if>
+    <macrolist>
+        <macro id="nlheader">
+            <#if subsidiary.name=='Scope VIC' >
+            <#include "https://5370305.app.netsuite.com/core/media/media.nl?id=20755&c=5370305&h=534377d4f3726b91fddd&
+            _xt=.ftl">
+            <#elseif subsidiary.name=='Gold' || subsidiary.name=='Sunshine'|| subsidiary.name=='Stoddart Asset
+            Management'|| subsidiary.name=='Scope Safety Systems' >
+            <table style="position: absolute; top: 0px; left: 0px;background-size:cover; width: 100%;   font-color: black;">
+                <tr>
+                    <!-- production file cabinet, images -->
+                    <td class="nameandaddress leftmargin"
+                        style="font-size: 10pt;color: black; line-height: 12; padding: 20px 0px;">
+                        <strong>${record.subsidiary.legalname}</strong>
+                        <br/>PO Box 3171 Mount Ommaney
+                        Qld 4074
+                        <br/>
+                        <strong>P:</strong>(07) 3725 5988 &nbsp;<strong>E:</strong>
+                        credit@stoddarts.com.au &nbsp;<strong>ABN:</strong>
+                        ${subsidiary.federalidnumber} &nbsp;<strong>ACN:</strong>
+                        ${subsidiary.state1taxnumber}
+                    </td>
+                    <!-- production file cabinet, templates, Stoddart_Header.png -->
+                </tr>
+            </table>
+            <!-- production file cabinet, templates, scope_header_invoice.ftl -->
+            <#else>
+            <table class="header"
+                   style="background-image: https://5370305.app.netsuite.com/core/media/media.nl?id=20748&amp;c=5370305&amp;h=54292c3dd943d527400c; background-size:cover; width: 100%;">
+                <tr>
+                    <!-- production file cabinet, images -->
+                    <td class="nameandaddress leftmargin">
+                        <strong>${record.subsidiary.legalname}</strong>
+                        <br/>PO Box 3171 Mount Ommaney
+                        Qld 4074
+                        <br/>
+                        <strong>P:</strong>(07) 3725 5988 &nbsp;<strong>E:</strong>
+                        credit@stoddarts.com.au &nbsp;<strong>ABN:</strong>
+                        ${subsidiary.federalidnumber} &nbsp;<strong>ACN:</strong>
+                        ${subsidiary.state1taxnumber}
+                    </td>
+                    <!-- production file cabinet, templates, Stoddart_Header.png -->
+                </tr>
+            </table>
+        </#if>
+    </macro>
+    <macro id="nlfooter">
+
+        <#if subsidiary.custrecord_stg_invoice_message?has_content>
+        <table class="inv_msg">
+            <tr>
+                <td>
+                    <p class="inv_msg">
+                        ${subsidiary.custrecord_stg_invoice_message}
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <#else>
+        <table class="empty_msg">
+            <tr>
+                <td>
+                    <p class="empty_msg">&nbsp;<br/>&nbsp;<br/>&nbsp;
+                    </p>
+                </td>
+            </tr>
+        </table>
+    </#if>
+
+    <table class="footerbank" style="padding: 14px">
+
+        <tr>
+            <td>
+                <b>Bank Account</b>
+            </td>
+            <td>${subsidiary.legalname}</td>
+        </tr>
+        <tr>
+            <td>
+                <b>BSB</b>
+            </td>
+            <td>${subsidiary.custrecord_stg_bsb}</td>
+        </tr>
+        <tr>
+            <td>
+                <b>Account</b>
+            </td>
+            <td>${subsidiary.custrecord_stg_account}</td>
+        </tr>
+        <tr>
+            <td>
+                <b>Reference</b>
+            </td>
+            <td>${record.entity.entityid}</td>
+        </tr>
+    </table>
+
+    <#if subsidiary.name=='Gold' || subsidiary.name=='Sunshine'|| subsidiary.name=='Stoddart Asset Management'||
+    subsidiary.name=='Scope Safety Systems'>
+    <p class="notes">&nbsp;</p>
+    <p class="notes">&nbsp;<br/>
+        &nbsp;
+    </p>
+    <#else>
+    <p class="notes">Remittance advice can be emailed to ar@stoddarts.com.au</p>
+    <p class="notes">The supplier and customer agree that the goods and services described in this invoice
+        have been supplied on the Supplier's Terms of Sale. The terms are stated on the supplier's website
+        www.stoddartgroup.com
+    </p>
+</#if>
+
+<#if subsidiary.name=='Scope VIC' >
+<#include "https://5370305.app.netsuite.com/core/media/media.nl?id=20754&c=5370305&h=34f72cdfbbaac46c2e57&_xt=.ftl">
+        <!-- production file cabinet, templates, scope_footer.ftl -->
+<#elseif  subsidiary.name=='Gold' || subsidiary.name=='Sunshine'|| subsidiary.name=='Stoddart Asset Management'|| subsidiary.name=='Scope Safety Systems' >
+<#include "https://5370305.app.netsuite.com/core/media/media.nl?id=251423&c=5370305&h=81ad2b8afbb4bb933ec8&_xt=.ftl">
+        <!-- production file cabinet, templates, other_group_footer.ftl -->
+<#else>
+<#include "https://5370305.app.netsuite.com/core/media/media.nl?id=20750&c=5370305&h=d85b9110b5f6b9803ebd&_xt=.ftl">
+        <!-- production file cabinet, templates, global_footer.txt -->
+        </#if>
+        </macro>
+        </macrolist>
+<style type="text/css">
+table.footer td {
+padding: 3px;
+font-size: 8pt;
+}
+</style>
+        </head>
+
+<body header="nlheader" header-height="12%" footer="nlfooter" footer-height="170pt" padding="0mm 0mm 0mm 0mm"
+      size="A4">
+
+
+<table class="invbox_inv">
+    <tr vertical-align="center">
+        <td class="title">TAX INVOICE</td>
+        <td align="center" vertical-align="middle">
+            <span class="number">${record.tranid}</span>
+        </td>
+    </tr>
+</table>
+
+<p>&nbsp;</p>
+
+<table style="width: 100%; margin-top: 10px;">
+    <tr>
+        <td class="firstcol">Bill To</td>
+        <td class="secondcol" rowspan="6">${record.billaddress}</td>
+        <td class="thirdcol">Account</td>
+        <td class="fourthcol">${record.entity.entityid}</td>
+    </tr>
+    <tr>
+        <td class="firstcol"></td>
+        <td class="thirdcol">
+            <b>Inv Date</b>
+        </td>
+        <td class="fourthcol">
+            <#if record.trandate?has_content>${record.trandate?string["d MMM yyyy"]}
+        </#if>
+    </td>
+</tr>
+<tr>
+    <td class="firstcol"></td>
+    <td class="thirdcol">
+        <b>Due Date</b>
+    </td>
+    <td class="fourthcol">
+        <#if record.duedate?has_content>${record.duedate?string["d MMM yyyy"]}
+    </#if>
+</td>
+</tr>
+<tr>
+<td class="firstcol"></td>
+<td class="thirdcol">Terms</td>
+<td class="fourthcol">${record.terms}</td>
+</tr>
+<tr>
+<td class="firstcol"></td>
+<td class="thirdcol">Customer Ref</td>
+<td class="fourthcol">${record.otherrefnum}</td>
+
+</tr>
+<tr>
+<td class="firstcol"></td>
+<td class="thirdcol">Job Ref</td>
+<td class="fourthcol">${record.custbody_stg_job.custrecord_stg_job_ref}</td>
+
+
+</tr>
+<tr>
+<td class="firstcol"></td>
+<td class="secondcol">${record.entity.custentity_stg_tradingname}</td>
+<td class="thirdcol">Site</td>
+<#if record.custbody_stg_job.custrecord_stg_job_address1?has_content>
+<td class="fourthcol" rowspan="3">${record.custbody_stg_job.custrecord_stg_job_address1}
+    <#if record.custbody_stg_job.custrecord_stg_job_address2?has_content>
+    <br/>${record.custbody_stg_job.custrecord_stg_job_address2}
+</#if>
+<#if record.custbody_stg_job.custrecord_stg_job_city?has_content>
+<br/>${record.custbody_stg_job.custrecord_stg_job_city}
+${record.custbody_stg_job.custrecord_stg_job_postcode}
+</#if>
+        </td>
+        </#if>
+        </tr>
+<tr>
+<td class="firstcol"></td>
+<td class="secondcol">
+    <#if record.entity.vatregnumber?has_content>ABN:
+</#if>${record.entity.vatregnumber}
+</td>
+<td class="thirdcol"></td>
+
+        </tr>
+<tr>
+<td class="firstcol"></td>
+<td class="secondcol"></td>
+<td class="thirdcol"></td>
+
+</tr>
+
+        </table>
+
+        <!-- APALAD START -->
+
+<table style="width: 100%; margin-top: 10px;">
+<tr>
+    <td class="firstcol"></td>
+    <td class="secondcol" style="align:right">Original Contract</td>
+    <td class="thirdcol" style="align:right;font-weight:400">$Sample Value</td>
+    <td class="fourthcol"></td>
+</tr>
+<tr>
+    <td class="firstcol"></td>
+    <td class="secondcol" style="align:right">Approved Variations to data</td>
+    <td class="thirdcol" style="align:right;font-weight:400">$Sample Value</td>
+    <td class="fourthcol"></td>
+</tr>
+<tr>
+    <td class="firstcol"></td>
+    <td class="secondcol" style="align:right">Variations yet to be approved</td>
+    <td class="thirdcol" style="align:right;font-weight:400;border-bottom: 1px solid #00b7b5">$Sample Value</td>
+    <td class="fourthcol"></td>
+</tr>
+<tr>
+    <td class="firstcol"></td>
+    <td class="secondcol" style="align:right">Revised Contract Sum</td>
+    <td class="thirdcol" style="align:right;border-bottom: 1px solid #00b7b5">$Sample Value</td>
+    <td class="fourthcol"></td>
+</tr>
+<tr>
+    <td class="firstcol"></td>
+    <td class="secondcol"></td>
+    <td class="thirdcol"></td>
+    <td class="fourthcol"></td>
+</tr>
+<tr>
+    <td class="firstcol"></td>
+    <td class="secondcol" style="align:right">Total Invoiced to date</td>
+    <td class="thirdcol" style="align:right;font-weight:400">$Sample Value</td>
+    <td class="fourthcol"></td>
+</tr>
+<tr>
+    <td class="firstcol"></td>
+    <td class="secondcol" style="align:right">Retention held to date</td>
+    <td class="thirdcol" style="align:right;font-weight:400">$Sample Value</td>
+    <td class="fourthcol"></td>
+</tr>
+</table>
+
+        <!-- APALAD END -->
+
+<#if record.item?has_content>
+<table class="itemtable">
+<!-- start items -->
+<#list record.item as item>
+<#if item_index==0>
+<thead>
+    <tr>
+        <th style="border-top: 1px solid #00b7b5" colspan="8">Details</th>
+        <th style="border-top: 1px solid #00b7b5" colspan="3">${item.options@label}</th>
+        <th style="border-top: 1px solid #00b7b5" align="right" colspan="4">Price (Ex GST)</th>
+        <th style="border-top: 1px solid #00b7b5" align="right" colspan="4">GST</th>
+        <th style="border-top: 1px solid #00b7b5" align="right" colspan="4">Price (Inc GST)</th>
+    </tr>
+</thead>
+</#if>
+<#if item.amount gt 0 || record.subsidiary !='Energy'>
+<tr>
+<td colspan="8">${item.description}<#if item.custcol_stg_note?has_content>
+    <br/>
+    <i>${item.custcol_stg_note}</i>
+</#if>
+</td>
+<td colspan="3">${item.options}</td>
+<td align="right" colspan="4">${item.amount}</td>
+<td align="right" colspan="4">${item.tax1Amt}</td>
+<td align="right" colspan="4">${item.grossAmt}</td>
+        </tr>
+        </#if>
+        </#list><!-- end items -->
+        </table>
+        </#if>
+
+
+        <!-- APALAD START -->
+
+<#if record.item?has_content>
+<table class="itemtable" border="0">
+<!-- start items -->
+<#list record.item as item>
+<#if item_index==0>
+<thead>
+    <tr>
+        <th style="border-top: 1px solid #00b7b5" colspan="8">Variations</th>
+        <th style="border-top: 1px solid #00b7b5" colspan="3">${item.options@label}</th>
+        <th style="border-top: 1px solid #00b7b5" align="center" colspan="4">PO</th>
+        <th style="border-top: 1px solid #00b7b5" align="center" colspan="4">Price (Ex GST)</th>
+        <th style="border-top: 1px solid #00b7b5" align="center" colspan="4">GST</th>
+        <th style="border-top: 1px solid #00b7b5" align="center" colspan="4">Price (Inc GST)</th>
+    </tr>
+</thead>
+</#if>
+<#if item.amount gt 0 || record.subsidiary !='Energy'>
+<tr>
+<td colspan="8">${item.description}<#if item.custcol_stg_note?has_content>
+    <br/>
+    <i>${item.custcol_stg_note}</i>
+</#if>
+</td>
+<td colspan="3">${item.options}</td>
+<td align="center" colspan="4">PO HERE</td>
+<td align="center" colspan="4">${item.amount}</td>
+<td align="center" colspan="4">${item.tax1Amt}</td>
+<td align="center" colspan="4">${item.grossAmt}</td>
+        </tr>
+        </#if>
+        </#list><!-- end items -->
+        </table>
+        </#if>
+
+        <!-- APALAD END -->
+
+<br/>
+
+<table class="itemtable" width="40%" align="right">
+<!-- start items -->
+<tr class="total_inv"></tr>
+
+<tr>
+    <td align="left" colspan="12">Total (Ex GST)</td>
+    <td align="right" colspan="12">${record.subtotal}</td>
+</tr>
+<tr>
+    <td align="left" colspan="12">GST</td>
+    <td align="right" colspan="12">${record.taxtotal}</td>
+</tr>
+<tr>
+    <td align="left" colspan="12">
+        <b>Total (Inc GST)</b>
+    </td>
+    <td align="right" colspan="12">
+        <b>${record.total}</b>
+    </td>
+</tr>
+<tr class="total_inv"></tr>
+
+<!-- end subtotals2 -->
+</table>
+
+        </body>
+        </pdf>
+<pdf>
+<head>
+    <link name="NotoSans" type="font" subtype="truetype" src="${nsfont.NotoSans_Regular}"
+          src-bold="${nsfont.NotoSans_Bold}" src-italic="${nsfont.NotoSans_Italic}"
+          src-bolditalic="${nsfont.NotoSans_BoldItalic}" bytes="2"/>
+    <link name="CenturyGothic" type="font" subtype="opentype"
+          src="https://5370305.app.netsuite.com/core/media/media.nl?id=20761&amp;c=5370305&amp;h=91a7ec77cd920efdd442&amp;_xt=.ttf"
+          src-bold="https://5370305.app.netsuite.com/core/media/media.nl?id=20764&amp;c=5370305&amp;h=1a9eada48125e0403414&amp;_xt=.ttf"
+          src-italic="https://5370305.app.netsuite.com/core/media/media.nl?id=20763&amp;c=5370305&amp;h=9b99020f6f7dee4af488&amp;_xt=.ttf"
+          src-bolditalic="https://5370305.app.netsuite.com/core/media/media.nl?id=20762&amp;c=5370305&amp;h=fbbc886dbb93d845b4e6&amp;_xt=.ttf"
+          bytes="2"/> <!-- production file cabinet, fonts -->
+
+
+    <#if subsidiary.name=='Scope VIC' >
+    <link type="stylesheet"
+          src="https://5370305.app.netsuite.com/core/media/media.nl?id=20756&amp;c=5370305&amp;h=3eb65032e2b20b948d7f&amp;_xt=.css"/>
+    <!-- production file cabinet, templates, scope_style.css -->
+    <#else>
+    <link type="stylesheet"
+          src="https://5370305.app.netsuite.com/core/media/media.nl?id=20753&amp;c=5370305&amp;h=7cb61524702fa8904ccd&amp;_xt=.css"/>
+    <!-- production file cabinet, templates, global_style.css -->
+</#if>
+
+<#if .locale=="zh_CN">
+<link name="NotoSansCJKsc" type="font" subtype="opentype" src="${nsfont.NotoSansCJKsc_Regular}"
+      src-bold="${nsfont.NotoSansCJKsc_Bold}" bytes="2"/>
+<#elseif .locale=="zh_TW">
+<link name="NotoSansCJKtc" type="font" subtype="opentype" src="${nsfont.NotoSansCJKtc_Regular}"
+      src-bold="${nsfont.NotoSansCJKtc_Bold}" bytes="2"/>
+<#elseif .locale=="ja_JP">
+<link name="NotoSansCJKjp" type="font" subtype="opentype" src="${nsfont.NotoSansCJKjp_Regular}"
+      src-bold="${nsfont.NotoSansCJKjp_Bold}" bytes="2"/>
+<#elseif .locale=="ko_KR">
+<link name="NotoSansCJKkr" type="font" subtype="opentype" src="${nsfont.NotoSansCJKkr_Regular}"
+      src-bold="${nsfont.NotoSansCJKkr_Bold}" bytes="2"/>
+<#elseif .locale=="th_TH">
+<link name="NotoSansThai" type="font" subtype="opentype"
+      src="${nsfont.NotoSansThai_Regular}" src-bold="${nsfont.NotoSansThai_Bold}" bytes="2"/>
+</#if>
+<macrolist>
+<macro id="nlheader">
+    <#if subsidiary.name=='Scope VIC' >
+    <#include "https://5370305.app.netsuite.com/core/media/media.nl?id=20755&c=5370305&h=534377d4f3726b91fddd&_xt=.ftl">
+    <#elseif subsidiary.name=='Gold' || subsidiary.name=='Sunshine'|| subsidiary.name=='Stoddart Asset Management'||
+    subsidiary.name=='Scope Safety Systems' >
+    <table style="position: absolute; top: 0px; left: 0px;background-size:cover; width: 100%;   font-color: black;">
+        <tr>
+            <!-- production file cabinet, images -->
+            <td class="nameandaddress leftmargin"
+                style="font-size: 10pt;color: black; line-height: 12; padding: 20px 0px;">
+                <strong>${record.subsidiary.legalname}</strong>
+                <br/>PO Box 3171 Mount Ommaney
+                Qld 4074
+                <br/>
+                <strong>P:</strong>(07) 3725 5988 &nbsp;<strong>E:</strong>
+                credit@stoddarts.com.au &nbsp;<strong>ABN:</strong>
+                ${subsidiary.federalidnumber} &nbsp;<strong>ACN:</strong>
+                ${subsidiary.state1taxnumber}
+            </td>
+            <!-- production file cabinet, templates, Stoddart_Header.png -->
+        </tr>
+    </table>
+    <!-- production file cabinet, templates, scope_header_invoice.ftl -->
+    <#else>
+    <table class="header"
+           style="background-image: https://5370305.app.netsuite.com/core/media/media.nl?id=20748&amp;c=5370305&amp;h=54292c3dd943d527400c; background-size:cover; width: 100%;">
+        <tr>
+            <!-- production file cabinet, images -->
+            <td class="nameandaddress leftmargin">
+                <strong>${record.subsidiary.legalname}</strong>
+                <br/>PO Box 3171 Mount Ommaney
+                Qld 4074
+                <br/>
+                <strong>P:</strong>(07) 3725 5988 &nbsp;<strong>E:</strong>
+                credit@stoddarts.com.au &nbsp;<strong>ABN:</strong>
+                ${subsidiary.federalidnumber} &nbsp;<strong>ACN:</strong>
+                ${subsidiary.state1taxnumber}
+            </td>
+            <!-- production file cabinet, templates, Stoddart_Header.png -->
+        </tr>
+    </table>
+</#if>
+</macro>
+<macro id="nlfooter">
+
+
+<#if subsidiary.custrecord_stg_invoice_message?has_content>
+<table class="inv_msg">
+    <tr>
+        <td>
+            <p class="inv_msg">
+                ${subsidiary.custrecord_stg_invoice_message}
+            </p>
+        </td>
+    </tr>
+</table>
+<#else>
+<table class="empty_msg">
+    <tr>
+        <td>
+            <p class="empty_msg">&nbsp;<br/>&nbsp;<br/>&nbsp;
+            </p>
+        </td>
+    </tr>
+</table>
+</#if>
+
+<#if subsidiary.name=='Gold' || subsidiary.name=='Sunshine'|| subsidiary.name=='Stoddart Asset Management'|| subsidiary.name=='Scope Safety Systems'>
+<p class="notes">&nbsp;</p>
+<p class="notes">&nbsp;<br/>
+&nbsp;
+</p>
+<#else>
+<p class="notes">Remittance advice can be emailed to ar@stoddarts.com.au</p>
+<p class="notes">The supplier and customer agree that the goods and services described in this invoice
+have been supplied on the Supplier's Terms of Sale. The terms are stated on the supplier's website
+www.stoddartgroup.com
+</p>
+        </#if>
+
+<#if subsidiary.name=='Scope VIC' >
+<#include "https://5370305.app.netsuite.com/core/media/media.nl?id=20754&c=5370305&h=34f72cdfbbaac46c2e57&_xt=.ftl">
+        <!-- production file cabinet, templates, scope_footer.ftl -->
+<#elseif  subsidiary.name=='Gold' || subsidiary.name=='Sunshine'|| subsidiary.name=='Stoddart Asset Management'|| subsidiary.name=='Scope Safety Systems' >
+<#include "https://5370305.app.netsuite.com/core/media/media.nl?id=251423&c=5370305&h=81ad2b8afbb4bb933ec8&_xt=.ftl">
+        <!-- production file cabinet, templates, other_group_footer.ftl -->
+<#else>
+<#include "https://5370305.app.netsuite.com/core/media/media.nl?id=20750&c=5370305&h=d85b9110b5f6b9803ebd&_xt=.ftl">
+        <!-- production file cabinet, templates, global_footer.txt -->
+        </#if>
+        </macro>
+        </macrolist>
+<style type="text/css">
+table.footer td {
+padding: 3px;
+font-size: 8pt;
+}
+</style>
+        </head>
+
+<body header="nlheader" header-height="12%" footer="nlfooter" footer-height="110pt" padding="0mm 0mm 0mm 0mm"
+      size="A4">
+
+<p>&nbsp;</p>
+
+<table style="width: 100%; margin-top: 10px;margin-left: 10px;">
+    <tr>
+        <td style="align:left;" class="firstcol">Contract Variations</td>
+    </tr>
+</table>
+
+
+<!-- APALAD START -->
+
+<#if record.item?has_content>
+<table class="itemtable" border="0">
+    <!-- start items -->
+    <#list record.item as item>
+    <#if item_index==0>
+    <thead>
+        <tr>
+            <th style="border-top: 1px solid #00b7b5" colspan="8">Description</th>
+            <th style="border-top: 1px solid #00b7b5" colspan="3">${item.options@label}</th>
+            <th style="border-top: 1px solid #00b7b5" align="center" colspan="4">PO</th>
+            <th style="border-top: 1px solid #00b7b5" align="center" colspan="4">Status</th>
+            <th style="border-top: 1px solid #00b7b5" align="center" colspan="4">Price (Ex GST)</th>
+            <th style="border-top: 1px solid #00b7b5" align="center" colspan="4">GST</th>
+            <th style="border-top: 1px solid #00b7b5" align="center" colspan="4">Price (Inc GST)</th>
+        </tr>
+    </thead>
+</#if>
+<#if item.amount gt 0 || record.subsidiary !='Energy'>
+<tr>
+    <td colspan="8">${item.description}<#if item.custcol_stg_note?has_content>
+        <br/>
+        <i>${item.custcol_stg_note}</i>
+    </#if>
+</td>
+<td colspan="3">${item.options}</td>
+<td align="center" colspan="4">PO HERE</td>
+<td align="center" colspan="4">${item.amount}</td>
+<td align="center" colspan="4">${item.tax1Amt}</td>
+<td align="center" colspan="4">${item.grossAmt}</td>
+</tr>
+        </#if>
+        </#list><!-- end items -->
+        </table>
+        </#if>
+
+        <!-- APALAD END -->
+
+        </body>
+        </pdf>
+        </pdfset>

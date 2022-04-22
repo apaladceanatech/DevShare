@@ -30,9 +30,13 @@ define(['N/email', 'N/file', 'N/record', 'N/render'],
             objPDF.name = "Non-Transaction Form.pdf"
 
             email.send({
-                attachments: [objPDF]
-            })
+                    attachments: [objPDF]
+        })
+            ;
+
         }
-        return {sendNonTransactionEmail}
+
+
+        return {foo}
 
     });

@@ -54,7 +54,7 @@ define(['N/record', 'N/search', 'N/file'],
             //log.debug("MAP RAW", mapContext);
 
             //Custom115
-            var searchText = "custentity_stg_cust_subsidiarylimit";
+            var searchText = "internalid";
             //var searchText = "custrecord_stg_stageclaim_fulfilled";
 
             try{
